@@ -1,6 +1,24 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Million.Application.Configuration;
+using Million.Application.Database.Commands.Address.CreateAddressCommand;
+using Million.Application.Database.Commands.Address.DeleteAddressCommand;
+using Million.Application.Database.Commands.Address.UpdateAddressCommand;
+using Million.Application.Database.Commands.Owner.CreateOwnerCommand;
+using Million.Application.Database.Commands.Owner.DeleteOwnerCommand;
+using Million.Application.Database.Commands.Owner.UpdateOwnerCommand;
+using Million.Application.Database.Commands.Property.CreatePropertyCommand;
+using Million.Application.Database.Commands.Property.UpdatePropertyCommand;
+using Million.Application.Database.Commands.PropertyImage.CreatePropertyImageCommand;
+using Million.Application.Database.Commands.PropertyImage.DeletePropertyImageCommand;
+using Million.Application.Database.Commands.PropertyImage.UpdatePropertyImageCommand;
+using Million.Application.Database.Commands.PropertyTrace.CreatePropertyTraceCommand;
+using Million.Application.Database.Commands.PropertyTrace.UpdatePropertyTraceCommand;
+using Million.Application.Database.Queries.GetAddressQuery;
+using Million.Application.Database.Queries.GetOwnerQuery;
+using Million.Application.Database.Queries.GetPropertyImageQuery;
+using Million.Application.Database.Queries.GetPropertyQuery;
+using Million.Application.Database.Queries.GetPropertyTraceQuery;
 
 namespace Million.Application.DIConfiguration
 {
@@ -19,6 +37,36 @@ namespace Million.Application.DIConfiguration
                 config.AddProfile(new MapperProfile());
             });
             services.AddSingleton(mapper.CreateMapper());
+            #endregion
+            #region Addresses Repositories
+            services.AddTransient<IGetAddressQuery, GetAddressQuery>();
+            services.AddTransient<ICreateAddressCommand, CreateAddressCommand>();
+            services.AddTransient<IUpdateAddressCommand, UpdateAddressCommand>();
+            services.AddTransient<IDeleteAddressCommand, DeleteAddressCommand>();
+            #endregion
+            #region Owners Repositories
+            services.AddTransient<IGetOwnerQuery, GetOwnerQuery>();
+            services.AddTransient<ICreateOwnerCommand, CreateOwnerCommand>();
+            services.AddTransient<IUpdateOwnerCommand, UpdateOwnerCommand>();
+            services.AddTransient<IDeleteOwnerCommand, DeleteOwnerCommand>();
+            #endregion
+            #region Properties Repositories
+            services.AddTransient<IGetPropertyQuery, GetPropertyQuery>();
+            services.AddTransient<ICreatePropertyCommand, CreatePropertyCommand>();
+            services.AddTransient<IUpdatePropertyCommand, UpdatePropertyCommand>();
+            services.AddTransient<IDeleteAddressCommand, DeleteAddressCommand>();
+            #endregion
+            #region Property Images Repository
+            services.AddTransient<IGetPropertyImageQuery, GetPropertyImageQuery>();
+            services.AddTransient<ICreatePropertyImageCommand, CreatePropertyImageCommand>();
+            services.AddTransient<IUpdatePropertyImageCommand, UpdatePropertyImageCommand>();
+            services.AddTransient<IDeletePropertyImageCommand, DeletePropertyImageCommand>();
+            #endregion
+            #region Property Traces Repository
+            services.AddTransient<IGetPropertyTraceQuery, GetPropertyTraceQuery>();
+            services.AddTransient<ICreatePropertyTraceCommand, CreatePropertyTraceCommand>();
+            services.AddTransient<IUpdatePropertyTraceCommand, UpdatePropertyTraceCommand>();
+            services.AddTransient<IDeleteAddressCommand, DeleteAddressCommand>();
             #endregion
             return services;
         }

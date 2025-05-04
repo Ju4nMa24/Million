@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Million.Application.Configuration;
 using Million.Application.Database.Commands.Address.CreateAddressCommand;
@@ -19,6 +20,9 @@ using Million.Application.Database.Queries.GetOwnerQuery;
 using Million.Application.Database.Queries.GetPropertyImageQuery;
 using Million.Application.Database.Queries.GetPropertyQuery;
 using Million.Application.Database.Queries.GetPropertyTraceQuery;
+using Million.Application.Validators.Address;
+using Million.Application.Validators.Owner;
+using Million.Application.Validators.Property;
 
 namespace Million.Application.DIConfiguration
 {
@@ -67,6 +71,18 @@ namespace Million.Application.DIConfiguration
             services.AddTransient<ICreatePropertyTraceCommand, CreatePropertyTraceCommand>();
             services.AddTransient<IUpdatePropertyTraceCommand, UpdatePropertyTraceCommand>();
             services.AddTransient<IDeleteAddressCommand, DeleteAddressCommand>();
+            #endregion
+            #region Address Validator
+            services.AddScoped<IValidator<CreateAddressModel>, CreateAddressModelValidator>();
+            services.AddScoped<IValidator<UpdateAddressModel>, UpdateAddressModelValidator>();
+            #endregion
+            #region Owner Validator
+            services.AddScoped<IValidator<CreateOwnerModel>, CreateOwnerModelValidator>();
+            services.AddScoped<IValidator<UpdateOwnerModel>, UpdateOwnerModelValidator>();
+            #endregion
+            #region Property Validator
+            services.AddScoped<IValidator<CreatePropertyModel>, CreatePropertyModelValidator>();
+            services.AddScoped<IValidator<UpdatePropertyModel>, UpdatePropertyModelValidator>();
             #endregion
             return services;
         }

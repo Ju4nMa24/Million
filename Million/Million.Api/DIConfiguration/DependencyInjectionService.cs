@@ -1,4 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
+using Million.Domain.Entities;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace Million.Api.DIConfiguration
@@ -20,7 +21,7 @@ namespace Million.Api.DIConfiguration
             #region Health Check Configuration
             services.AddHealthChecksUI().AddInMemoryStorage();
             #endregion
-            //services.AddIdentityApiEndpoints<UserEntity>();
+            services.AddIdentityApiEndpoints<UserEntity>();
             return services;
         }
     }

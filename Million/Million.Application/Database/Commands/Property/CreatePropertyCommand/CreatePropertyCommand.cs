@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Million.Domain.Entities.Owner;
 using Million.Domain.Entities.Property;
 
 namespace Million.Application.Database.Commands.Property.CreatePropertyCommand
@@ -30,6 +32,13 @@ namespace Million.Application.Database.Commands.Property.CreatePropertyCommand
 
             model.CreationDate = DateTime.UtcNow;
             model.ModificationDate = DateTime.UtcNow;
+
+            OwnerEntity? owner = await _db.Owners.FirstOrDefaultAsync(o => o.IdOwner == model.IdOwner);
+
+            if (owner == null)
+                return model;
+
+            model.IdAddress = owner.IdAddress;
 
             await _db.Properties.AddAsync(_mapper.Map<PropertyEntity>(model));
             await _db.SaveAsync();

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Million.Application.Database.Commands.Address.UpdateAddressCommand;
 using Million.Domain.Entities.Owner;
+using Million.Domain.Entities.OwnerContact;
 
 namespace Million.Application.Database.Commands.Owner.UpdateOwnerCommand
 {
@@ -24,7 +26,11 @@ namespace Million.Application.Database.Commands.Owner.UpdateOwnerCommand
         /// <returns></returns>
         public async Task<UpdateOwnerModel?> Execute(UpdateOwnerModel model)
         {
-            OwnerEntity? ownerEntity = await _db.Owners.FindAsync(model.IdOwner);
+            OwnerContactEntity? contact = await _db.OwnerContacts.FirstOrDefaultAsync(o => o.Email == model.OldEmail);
+            if (contact == null)
+                return null;
+
+            OwnerEntity? ownerEntity = await _db.Owners.FirstOrDefaultAsync(o => o.IdOwner == contact.IdOwner);
             if (ownerEntity == null) return null;
 
             if (model.Address == null)
@@ -37,15 +43,18 @@ namespace Million.Application.Database.Commands.Owner.UpdateOwnerCommand
                 State = model.Address?.State,
                 Street = model.Address?.Street,
                 ZipCode = model.Address?.ZipCode,
-                IdAddress = ownerEntity.Address.IdAddress
+                IdAddress = ownerEntity.IdAddress
             });
 
             if (resultAddress.Result == null)
                 return null;
 
-            _mapper.Map(model, ownerEntity);
+            ownerEntity.Photo = model.Photo;
+            ownerEntity.Birthday = model.Birthday;
+            ownerEntity.Name = model.Name;
             _db.Owners.Update(ownerEntity);
             await _db.SaveAsync();
+            model.IdOwner = ownerEntity.IdOwner;
             return model;
         }
     }

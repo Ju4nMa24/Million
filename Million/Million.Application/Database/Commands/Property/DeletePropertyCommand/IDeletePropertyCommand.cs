@@ -1,12 +1,12 @@
 ﻿namespace Million.Application.Database.Commands.Property.DeleteAddressCommand
 {
-    public interface IDeleteAddressCommand
+    public interface IDeletePropertyCommand
     {
         /// <summary>
-        /// Delete address command.
+        /// This method is used to delete the property from the database.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<bool> Execute(DeleteAddressModel model);
+        Task<bool> Execute(DeletePropertyModel model);
     }
 }

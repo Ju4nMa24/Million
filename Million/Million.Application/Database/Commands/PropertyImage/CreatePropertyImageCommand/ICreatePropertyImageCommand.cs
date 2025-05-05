@@ -1,6 +1,6 @@
 ﻿namespace Million.Application.Database.Commands.PropertyImage.CreatePropertyImageCommand
 {
-    internal interface ICreatePropertyImageCommand
+    public interface ICreatePropertyImageCommand
     {
         /// <summary>
         /// This method is used to create a new property image.

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Million.Domain.Entities.Address;
 
 namespace Million.Application.Database.Commands.Address.UpdateAddressCommand
 {
@@ -21,13 +22,10 @@ namespace Million.Application.Database.Commands.Address.UpdateAddressCommand
         /// <returns></returns>
         public async Task<UpdateAddressModel?> Execute(UpdateAddressModel model)
         {
-            var addressEntity = await _db.Addresses.FindAsync(model.IdAddress);
+            AddressEntity? addressEntity = await _db.Addresses.FindAsync(model.IdAddress);
             if (addressEntity == null) return null;
 
             _mapper.Map(model, addressEntity);
-            //addressEntity.ModifiedAt = DateTime.UtcNow;
-            _db.Addresses.Update(addressEntity);
-            await _db.SaveAsync();
             return model;
         }
     }

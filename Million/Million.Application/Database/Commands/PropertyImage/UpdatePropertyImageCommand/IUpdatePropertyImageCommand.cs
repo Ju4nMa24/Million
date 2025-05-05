@@ -1,6 +1,6 @@
 ﻿namespace Million.Application.Database.Commands.PropertyImage.UpdatePropertyImageCommand
 {
-    internal interface IUpdatePropertyImageCommand
+    public interface IUpdatePropertyImageCommand
     {
         /// <summary>
         /// This method is used to update property image.

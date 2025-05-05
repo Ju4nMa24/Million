@@ -27,11 +27,17 @@ namespace Million.Common.Utilities
                 || extension == Formats.JPEG.ToString() || extension == Formats.GIF.ToString() || extension == Formats.PNG.ToString();
         }
         /// <summary>
-        /// This method is used to validate plate.
+        /// This method is used to validate text, making it alphanumeric and hyphen.
         /// </summary>
         /// <param name="plate"></param>
         /// <returns></returns>
         public static bool IsAlphanumericAndHyphen(string text) => (AlphanumericAndHyphen().IsMatch(text));
+        /// <summary>
+        /// This method is used to validate text.
+        /// </summary>
+        /// <param name="plate"></param>
+        /// <returns></returns>
+        public static bool IsFullName(string text) => (FullName().IsMatch(text));
         /// <summary>
         /// This method is used to validate text, making it alphanumeric.
         /// </summary>
@@ -76,6 +82,8 @@ namespace Million.Common.Utilities
         private static partial Regex ForeignerId();
         [GeneratedRegex(RegularExpressions.ONLY_NIT)]
         private static partial Regex Nit();
+        [GeneratedRegex(RegularExpressions.ONLY_FULL_NAME)]
+        private static partial Regex FullName();
         #endregion
     }
 }

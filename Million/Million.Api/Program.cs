@@ -1,10 +1,11 @@
+using HealthChecks.UI.Client;
+using Million.Api.DIConfiguration;
 using Million.Application.DIConfiguration;
 using Million.Common.DIConfiguration;
 using Million.Domain.DIConfiguration;
+using Million.Domain.Entities;
 using Million.External.DIConfiguration;
 using Million.Persistence.DIConfiguration;
-using HealthChecks.UI.Client;
-using Million.Api.DIConfiguration;
 using WatchDog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,8 +24,8 @@ builder.Services
     .AddPersistence(builder.Configuration);
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
+WebApplication app = builder.Build();
+app.MapIdentityApi<UserEntity>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

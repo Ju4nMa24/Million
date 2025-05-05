@@ -1,8 +1,9 @@
 ﻿namespace Million.Application.Database.Commands.Property.DeleteAddressCommand
 {
-    public class DeleteAddressModel
+    public class DeletePropertyModel
     {
-        public Guid IdAddress { get; set; }
+        public Guid IdProperty { get; set; }
     }
+
 
 }

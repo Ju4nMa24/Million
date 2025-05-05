@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Million.Domain.Entities.PropertyImage;
 
 namespace Million.Application.Database.Commands.PropertyImage.UpdatePropertyImageCommand
@@ -22,7 +23,7 @@ namespace Million.Application.Database.Commands.PropertyImage.UpdatePropertyImag
         /// <returns></returns>
         public async Task<UpdatePropertyImageModel?> Execute(UpdatePropertyImageModel model)
         {
-            PropertyImageEntity? propertyImageEntity = await _db.PropertyImages.FindAsync(model.IdPropertyImage);
+            PropertyImageEntity? propertyImageEntity = await _db.PropertyImages.FirstOrDefaultAsync(p => p.IdPropertyImage == model.IdPropertyImage);
             if (propertyImageEntity == null) return null;
 
             _mapper.Map(model, propertyImageEntity);

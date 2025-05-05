@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Million.Domain.Entities.PropertyTrace;
 
 namespace Million.Application.Database.Commands.PropertyTrace.UpdatePropertyTraceCommand
@@ -21,7 +22,7 @@ namespace Million.Application.Database.Commands.PropertyTrace.UpdatePropertyTrac
         /// <returns></returns>
         public async Task<UpdatePropertyTraceModel?> Execute(UpdatePropertyTraceModel model)
         {
-            PropertyTraceEntity? propertyTraceEntity = await _db.PropertyTraces.FindAsync(model.IdPropertyTrace);
+            PropertyTraceEntity? propertyTraceEntity = await _db.PropertyTraces.FirstOrDefaultAsync(p => p.IdPropertyTrace == model.IdPropertyTrace);
             if (propertyTraceEntity == null) return null;
 
             _mapper.Map(model, propertyTraceEntity);

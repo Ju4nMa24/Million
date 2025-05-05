@@ -1,4 +1,5 @@
-﻿using Million.Domain.Entities.PropertyImage;
+﻿using Microsoft.EntityFrameworkCore;
+using Million.Domain.Entities.PropertyImage;
 
 namespace Million.Application.Database.Commands.PropertyImage.DeletePropertyImageCommand
 {
@@ -19,7 +20,7 @@ namespace Million.Application.Database.Commands.PropertyImage.DeletePropertyImag
         /// <returns></returns>
         public async Task<bool> Execute(DeletePropertyImageModel model)
         {
-            PropertyImageEntity? propertyImageEntity = await _db.PropertyImages.FindAsync(model.IdPropertyImage);
+            PropertyImageEntity? propertyImageEntity = await _db.PropertyImages.FirstOrDefaultAsync(p => p.IdPropertyImage == model.IdPropertyImage);
             if (propertyImageEntity == null) return false;
 
             _db.PropertyImages.Remove(propertyImageEntity);

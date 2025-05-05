@@ -32,9 +32,4 @@
   <ProjectReference Include="..\Million.Persistence\Million.Persistence.csproj" />
 </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

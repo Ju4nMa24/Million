@@ -5,7 +5,10 @@ using Million.Application.Database.Commands.Address.UpdateAddressCommand;
 using Million.Application.Database.Commands.Owner.CreateOwnerCommand;
 using Million.Application.Database.Commands.Owner.DeleteOwnerCommand;
 using Million.Application.Database.Commands.Owner.UpdateOwnerCommand;
+using Million.Application.Database.Commands.OwnerContact.CreateOwnerContactCommand;
+using Million.Application.Database.Commands.OwnerContact.UpdateOwnerContactCommand;
 using Million.Application.Database.Commands.Property.CreatePropertyCommand;
+using Million.Application.Database.Commands.Property.DeleteAddressCommand;
 using Million.Application.Database.Commands.Property.UpdatePropertyCommand;
 using Million.Application.Database.Commands.PropertyImage.CreatePropertyImageCommand;
 using Million.Application.Database.Commands.PropertyImage.DeletePropertyImageCommand;
@@ -19,6 +22,7 @@ using Million.Application.Database.Queries.GetPropertyQuery;
 using Million.Application.Database.Queries.GetPropertyTraceQuery;
 using Million.Domain.Entities.Address;
 using Million.Domain.Entities.Owner;
+using Million.Domain.Entities.OwnerContact;
 using Million.Domain.Entities.Property;
 using Million.Domain.Entities.PropertyImage;
 using Million.Domain.Entities.PropertyTrace;
@@ -48,7 +52,7 @@ namespace Million.Application.Configuration
             CreateMap<PropertyEntity, GetPropertyModel>().ReverseMap();
             CreateMap<PropertyEntity, CreatePropertyModel>().ReverseMap();
             CreateMap<PropertyEntity, UpdatePropertyModel>().ReverseMap();
-            CreateMap<PropertyEntity, DeleteAddressModel>().ReverseMap();
+            CreateMap<PropertyEntity, DeletePropertyModel>().ReverseMap();
             #endregion
             #region Maps to Properties Image
             CreateMap<PropertyImageEntity, GetPropertyImageModel>().ReverseMap();
@@ -61,6 +65,11 @@ namespace Million.Application.Configuration
             CreateMap<PropertyTraceEntity, CreatePropertyTraceModel>().ReverseMap();
             CreateMap<PropertyTraceEntity, UpdatePropertyTraceModel>().ReverseMap();
             CreateMap<PropertyTraceEntity, DeleteAddressModel>().ReverseMap();
+            #endregion
+            #region Maps to Owners Contact
+            CreateMap<OwnerContactEntity, CreateOwnerContactModel>().ReverseMap();
+            CreateMap<OwnerContactEntity, UpdateOwnerContactModel>().ReverseMap();
+
             #endregion
         }
     }

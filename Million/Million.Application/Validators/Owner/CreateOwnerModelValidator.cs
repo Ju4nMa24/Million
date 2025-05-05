@@ -10,7 +10,7 @@ namespace Million.Application.Validators.Owner
             RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
             RuleFor(x => x.Birthday).NotEmpty().LessThan(DateTime.UtcNow);
             RuleFor(x => x.Photo).NotEmpty().MaximumLength(200);
-            RuleFor(x => x.IdAddress).NotEmpty();
+            //RuleFor(x => x.IdAddress).NotEmpty();
         }
     }
 }

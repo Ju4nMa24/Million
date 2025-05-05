@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using Million.Domain.Entities.Property;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Million.Application.Database.Commands.Property.CreatePropertyCommand
 {

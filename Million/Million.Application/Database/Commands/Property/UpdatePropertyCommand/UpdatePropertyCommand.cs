@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Million.Application.Database.Commands.Property.UpdatePropertyCommand
 {
@@ -18,7 +19,7 @@ namespace Million.Application.Database.Commands.Property.UpdatePropertyCommand
         /// <returns></returns>
         public async Task<UpdatePropertyModel?> Execute(UpdatePropertyModel model)
         {
-            var propertyEntity = await _db.Properties.FindAsync(model.IdProperty);
+            var propertyEntity = await _db.Properties.FirstOrDefaultAsync(p => p.IdProperty == model.IdProperty);
             if (propertyEntity == null) return null;
 
             _mapper.Map(model, propertyEntity);

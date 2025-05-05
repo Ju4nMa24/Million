@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Million.Application.Database.Commands.PropertyTrace.CreatePropertyTraceCommand;
 using Million.Application.Database.Commands.PropertyTrace.DeleteAddressCommand;
@@ -12,6 +11,8 @@ namespace Million.Api.Controllers
     /// <summary>
     /// This controller is used to manage property traces.
     /// </summary>
+    /// 
+    [Authorize]
     [ApiController]
     [Route("api/property-trace")]
     public class PropertyTraceController : ControllerBase
@@ -25,13 +26,8 @@ namespace Million.Api.Controllers
         /// <returns></returns>
         [HttpPost("create")]
         public async Task<ActionResult> Create([FromBody] CreatePropertyTraceModel model,
-                                               [FromServices] ICreatePropertyTraceCommand command,
-                                               [FromServices] IValidator<CreatePropertyTraceModel> validator)
+                                               [FromServices] ICreatePropertyTraceCommand command)
         {
-            ValidationResult validation = await validator.ValidateAsync(model);
-            if (!validation.IsValid)
-                return BadRequest(ResponseApiService.Response(400, "Validation Failed", validation.Errors));
-
             CreatePropertyTraceModel? result = await command.Execute(model);
             return Ok(ResponseApiService.Response(201, "Created", result));
         }
@@ -44,13 +40,8 @@ namespace Million.Api.Controllers
         /// <returns></returns>
         [HttpPut("update")]
         public async Task<ActionResult> Update([FromBody] UpdatePropertyTraceModel model,
-                                       [FromServices] IUpdatePropertyTraceCommand command,
-                                       [FromServices] IValidator<UpdatePropertyTraceModel> validator)
+                                       [FromServices] IUpdatePropertyTraceCommand command)
         {
-            ValidationResult validation = await validator.ValidateAsync(model);
-            if (!validation.IsValid)
-                return BadRequest(ResponseApiService.Response(400, "Validation Failed", validation.Errors));
-
             UpdatePropertyTraceModel? result = await command.Execute(model);
             return Ok(ResponseApiService.Response(200, "Updated", result));
         }

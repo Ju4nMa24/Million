@@ -3,6 +3,7 @@
     public class DeleteAddressModel
     {
         public Guid IdAddress { get; set; }
+        public Guid IdOwner { get; set; }
     }
 
 }

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Million.Application.Database.Commands.Address.CreateAddressCommand;
 using Million.Application.Database.Commands.Property.CreatePropertyCommand;
@@ -14,6 +15,8 @@ namespace Million.Api.Controllers
     /// <summary>
     /// This controller is used to manage properties.
     /// </summary>
+    /// 
+    [Authorize]
     [Route("api/v1/property")]
     [ApiController]
     public class PropertyController : ControllerBase

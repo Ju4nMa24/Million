@@ -7,7 +7,6 @@ namespace Million.Application.Validators.Address
     {
         public UpdateAddressModelValidator()
         {
-            RuleFor(x => x.IdAddress).NotEmpty();
             RuleFor(x => x.Street).NotEmpty().MaximumLength(100);
             RuleFor(x => x.City).NotEmpty().MaximumLength(50);
             RuleFor(x => x.State).NotEmpty().MaximumLength(50);

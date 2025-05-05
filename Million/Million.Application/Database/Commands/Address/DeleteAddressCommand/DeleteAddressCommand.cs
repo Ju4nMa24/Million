@@ -1,4 +1,6 @@
-﻿using Million.Domain.Entities.Address;
+﻿using Microsoft.EntityFrameworkCore;
+using Million.Domain.Entities.Address;
+using Million.Domain.Entities.Owner;
 
 namespace Million.Application.Database.Commands.Address.DeleteAddressCommand
 {
@@ -19,7 +21,12 @@ namespace Million.Application.Database.Commands.Address.DeleteAddressCommand
         /// <returns></returns>
         public async Task<bool> Execute(DeleteAddressModel model)
         {
-            AddressEntity? addressEntity = await _db.Addresses.FindAsync(model.IdAddress);
+            OwnerEntity? owner = await _db.Owners.FirstOrDefaultAsync(o => o.IdOwner == model.IdOwner);
+
+            if (owner == null)
+                return false;
+
+            AddressEntity? addressEntity = await _db.Addresses.FirstOrDefaultAsync(a => a.IdAddress == owner.IdAddress);
             if (addressEntity == null) return false;
 
             _db.Addresses.Remove(addressEntity);

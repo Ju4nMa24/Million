@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Million.Application.Database.Commands.PropertyImage.CreatePropertyImageCommand;
 using Million.Application.Database.Commands.PropertyImage.DeletePropertyImageCommand;
@@ -12,6 +13,8 @@ namespace Million.Api.Controllers
     /// <summary>
     /// This controller is used to manage property images.
     /// </summary>
+    /// 
+    [Authorize]
     [ApiController]
     [Route("api/property-image")]
     public class PropertyImageController : ControllerBase
@@ -25,13 +28,8 @@ namespace Million.Api.Controllers
         /// <returns></returns>
         [HttpPost("create")]
         public async Task<ActionResult> Create([FromBody] CreatePropertyImageModel model,
-                                               [FromServices] ICreatePropertyImageCommand command,
-                                               [FromServices] IValidator<CreatePropertyImageModel> validator)
+                                               [FromServices] ICreatePropertyImageCommand command)
         {
-            ValidationResult validation = await validator.ValidateAsync(model);
-            if (!validation.IsValid)
-                return BadRequest(ResponseApiService.Response(400, "Validation Failed", validation.Errors));
-
             var result = await command.Execute(model);
             return Ok(ResponseApiService.Response(201, "Created", result));
         }
@@ -44,13 +42,8 @@ namespace Million.Api.Controllers
         /// <returns></returns>
         [HttpPut("update")]
         public async Task<ActionResult> Update([FromBody] UpdatePropertyImageModel model,
-                                               [FromServices] IUpdatePropertyImageCommand command,
-                                               [FromServices] IValidator<UpdatePropertyImageModel> validator)
+                                               [FromServices] IUpdatePropertyImageCommand command)
         {
-            ValidationResult validation = await validator.ValidateAsync(model);
-            if (!validation.IsValid)
-                return BadRequest(ResponseApiService.Response(400, "Validation Failed", validation.Errors));
-
             UpdatePropertyImageModel? result = await command.Execute(model);
             return Ok(ResponseApiService.Response(200, "Updated", result));
         }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Million.Domain.Entities.Address;
+using Million.Domain.Entities.Owner;
 
 namespace Million.Application.Database.Commands.Address.UpdateAddressCommand
 {
@@ -26,6 +27,8 @@ namespace Million.Application.Database.Commands.Address.UpdateAddressCommand
             if (addressEntity == null) return null;
 
             _mapper.Map(model, addressEntity);
+            _db.Addresses.Update(addressEntity);
+            await _db.SaveAsync();
             return model;
         }
     }

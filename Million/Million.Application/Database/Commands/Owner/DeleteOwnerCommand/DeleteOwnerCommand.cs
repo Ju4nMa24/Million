@@ -8,13 +8,12 @@ namespace Million.Application.Database.Commands.Owner.DeleteOwnerCommand
     /// Command to delete an owner from the database.
     /// </summary>
     /// <param name="db"></param>
-    public class DeleteOwnerCommand(IDataBaseService db, IDeleteAddressCommand deleteAddress) : IDeleteOwnerCommand
+    public class DeleteOwnerCommand(IDataBaseService db) : IDeleteOwnerCommand
     {
         /// <summary>
         /// Constructor.
         /// </summary>
         private readonly IDataBaseService _db = db;
-        private readonly IDeleteAddressCommand _deleteAddress = deleteAddress;
 
         /// <summary>
         /// This method is used to delete the owner info in the database.
@@ -25,12 +24,6 @@ namespace Million.Application.Database.Commands.Owner.DeleteOwnerCommand
         {
             OwnerEntity? ownerEntity = await _db.Owners.FirstOrDefaultAsync(p => p.IdOwner == model.IdOwner);
             if (ownerEntity == null) return false;
-
-            Task<bool> resultAddress = _deleteAddress.Execute(new DeleteAddressModel
-            {
-                IdAddress = ownerEntity.IdAddress
-            });
-            if (!resultAddress.Result) return false;
 
             _db.Owners.Remove(ownerEntity);
             await _db.SaveAsync();

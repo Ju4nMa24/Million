@@ -1,4 +1,6 @@
-﻿namespace Million.Application.Database.Commands.Property.CreatePropertyCommand
+﻿using System.Text.Json.Serialization;
+
+namespace Million.Application.Database.Commands.Property.CreatePropertyCommand
 {
     public class CreatePropertyModel
     {
@@ -9,6 +11,7 @@
         public required string Status { get; set; }
 
         public Guid IdOwner { get; set; }
+        [JsonIgnore]
         public Guid IdAddress { get; set; }
 
         public DateTime CreationDate { get; set; }

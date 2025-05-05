@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Million.Application.Database.Commands.Address.DeleteAddressCommand;
 using Million.Application.Database.Commands.Owner.CreateOwnerCommand;
 using Million.Application.Database.Commands.Owner.DeleteOwnerCommand;
 using Million.Application.Database.Commands.Owner.UpdateOwnerCommand;
@@ -11,6 +13,7 @@ using Million.Application.Database.Queries.GetOwnerContactByIdQuery;
 using Million.Application.Database.Queries.GetOwnerQuery;
 using Million.Application.Features;
 using Million.Common.Constants;
+using Million.Domain.Entities.Owner;
 using Million.Domain.Entities.OwnerContact;
 
 namespace Million.Api.Controllers
@@ -18,6 +21,8 @@ namespace Million.Api.Controllers
     /// <summary>
     /// This controller is used to manage owners.
     /// </summary>
+    /// 
+    [Authorize]
     [Route("api/v1/owner")]
     [ApiController]
     public class OwnerController : ControllerBase
@@ -78,12 +83,20 @@ namespace Million.Api.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id,[FromServices] IDeleteOwnerCommand command, [FromServices]IDeleteOwnerContactCommand contactCommand)
+        public async Task<IActionResult> Delete(Guid id,[FromServices] IDeleteOwnerCommand command, [FromServices] IDeleteAddressCommand deleteAddress, [FromServices]IDeleteOwnerContactCommand contactCommand)
         {
+            bool contactResult = await contactCommand.Execute(id);
+            if (!contactResult)
+                return NotFound(ResponseApiService.Response(StatusCodes.Status404NotFound, Errors.FAILED));
+
+            bool resultAddress = await deleteAddress.Execute(new DeleteAddressModel
+            {
+                IdOwner = id
+            });
+            if (!resultAddress)
+                return NotFound(ResponseApiService.Response(StatusCodes.Status404NotFound, Errors.FAILED));
+
             bool result = await command.Execute(new DeleteOwnerModel { IdOwner = id });
-            bool contactResult = false;
-            if (result)
-                contactResult = await contactCommand.Execute(id);
 
             if (!contactResult && !result)
                 return BadRequest(ResponseApiService.Response(StatusCodes.Status400BadRequest, Errors.FAILED_WITH_DESCRIPTION, string.Empty));

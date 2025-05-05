@@ -3,6 +3,7 @@
     public class RegularExpressions
     {
         public const string ONLY_TEXT = @"^[a-zA-Z\s]+$";
+        public const string ONLY_FULL_NAME = @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$";
         public const string ALPHANUMERIC_AND_HYPHEN = @"^[a-zA-Z0-9-]*$";
         public const string ALPHANUMERIC = @"^[a-zA-Z0-9]*$";
         public const string NUMERIC = @"^[0-9]*$";

@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantGlobalization>false</InvariantGlobalization>
     <UserSecretsId>314bf846-000d-4b28-af74-f5b6374cac0b</UserSecretsId>
   </PropertyGroup>
 
@@ -31,10 +31,5 @@
   <ProjectReference Include="..\Million.External\Million.External.csproj" />
   <ProjectReference Include="..\Million.Persistence\Million.Persistence.csproj" />
 </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
 
 </Project>
